@@ -1,22 +1,30 @@
-kivy-garden demo of cython flower
-==================================
+[![Coverage Status](https://coveralls.io/repos/github/kivy-garden/collider/badge.svg?branch=master)](https://coveralls.io/github/kivy-garden/collider?branch=master)
+[![Build Status](https://travis-ci.com/kivy-garden/collider.svg?branch=master)](https://travis-ci.com/kivy-garden/collider)
 
-[![Coverage Status](https://coveralls.io/repos/github/kivy-garden/cython_flower/badge.svg?branch=master)](https://coveralls.io/github/kivy-garden/cython_flower?branch=master)
-[![Build Status](https://travis-ci.com/kivy-garden/cython_flower.svg?branch=master)](https://travis-ci.com/kivy-garden/cython_flower)
+Collider
+===============
 
-A kivy garden flower that shows how to add flowers that requires cython compilation.
+See http://kivy-garden.github.io/garden.collider/index.html for html docs.
 
-Flower information
--------------------
+The collider module contains classes which can be used to test membership
+of a point in some space. See individual class documentation for details.
 
-A kivy garden flower demo with cython code.
+For example, using the Collide2DPoly class we can test whether points fall
+within a general polygon, e.g. a simple triangle::
+
+    >>> collider = Collide2DPoly([10., 10., 20., 30., 30., 10.],\
+                                 cache=True)
+    >>> (0.0, 0.0) in collider
+    False
+    >>> (20.0, 20.0) in collider
+    True
 
 Install
 ---------
 
 To install with pip::
 
-    pip install kivy_garden.cython_flower
+    pip install kivy_garden.collider
 
 To build or re-build locally::
 
@@ -25,13 +33,6 @@ To build or re-build locally::
 Or to install as editable (package is installed, but can be edited in its original location)::
 
     pip install -e .
-
-Usage
--------
-
-```py
-do_something
-```
 
 TODO
 -------
@@ -52,7 +53,7 @@ Please see the [LICENSE.txt](LICENSE.txt) file.
 How to release
 ===============
 
-* update `__version__` in `kivy-garden/cython_flower/__init__.py` to the latest version.
+* update `__version__` in `kivy-garden/collider/__init__.py` to the latest version.
 * update `CHANGELOG.md` and commit the changes
 * call `git tag -a x.y.z -m "Tagging version x.y.z"`
 * for each python version you want to release call `python setup.py bdist_wheel`, which generates the wheels. Call once `python setup.py sdist` to generate the sdist. They are saved in the dist/* directory

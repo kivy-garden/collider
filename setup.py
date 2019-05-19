@@ -13,9 +13,9 @@ except ImportError:
     from distutils.extension import Extension
     print('Using distutils')
 
-from kivy_garden.cython_flower import __version__  # <-- change this
+from kivy_garden.collider._version import __version__
 
-URL = 'https://github.com/kivy-garden/cython_flower'  # <-- change this
+URL = 'https://github.com/kivy-garden/collider'  # <-- change this
 
 
 platform = sys.platform
@@ -102,7 +102,7 @@ if can_use_cython:
 else:
     mod_suffix = '.c'
 
-mods = ['cython_flower/_compute']  # <-- change this
+mods = ['collider/_collider']
 
 ext_modules = [Extension(
     'kivy_garden.' + src_file.replace('/', '.'),
@@ -120,9 +120,9 @@ if declare_cython:
     setup_requires.append('cython')
 
 setup(
-    name='kivy_garden.cython_flower',  # <-- change this
+    name='kivy_garden.collider',
     version=__version__,
-    description='A kivy garden cython flower demo.',
+    description='Collides a point with a space defined by a curve.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url=URL,
@@ -139,7 +139,7 @@ setup(
     ],
     keywords='Kivy kivy-garden',
 
-    packages=['kivy_garden.cython_flower'],
+    packages=['kivy_garden.collider', 'kivy_garden.collider._collider'],
     setup_requires=setup_requires,
     install_requires=[],
     extras_require={
