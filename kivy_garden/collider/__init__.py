@@ -1,9 +1,8 @@
-
+from ._version import __version__
 
 __all__ = ('Collide2DPoly', 'CollideBezier', 'CollideEllipse')
-__version__ = '0.1-dev'
 
-from .collider import Collide2DPoly, CollideEllipse, CollideBezier
+from ._collider import Collide2DPoly, CollideEllipse, CollideBezier
 
 
 if __name__ == '__main__':

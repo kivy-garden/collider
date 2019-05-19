@@ -6,6 +6,6 @@
 :mod:`collider`
 ==============================
 
-.. automodule:: collider
+.. automodule:: kivy_garden.collider
    :members:
    :show-inheritance:

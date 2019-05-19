@@ -1,7 +1,7 @@
 import pytest
 
 
-def test_cython_flower():
-    from kivy_garden.cython_flower import CythonFlowerLabel
-    label = CythonFlowerLabel()
-    assert label.text == 'Demo flower' * 2
+def test_collider():
+    from kivy_garden.collider import Collide2DPoly
+    poly = Collide2DPoly([0, 0, 100, 0, 100, 100, 0, 100])
+    assert (50, 50) in poly
