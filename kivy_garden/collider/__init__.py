@@ -45,7 +45,8 @@ if __name__ == '__main__':
             touch.ungrab(self)
             if self.state == 'drawing':
                 self.state = 'testing'
-                self.collider = Collide2DPoly(touch.ud['line'].points, cache=True)
+                self.collider = Collide2DPoly(
+                    touch.ud['line'].points, cache=True)
                 collider = self.collider
                 texture = Texture.create(size=self.size)
                 inside = [255, 255, 0]

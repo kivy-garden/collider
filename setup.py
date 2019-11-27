@@ -52,7 +52,7 @@ with open(path.join(src_path, 'README.md'), encoding='utf-8') as f:
 
 
 class FlowerBuildExt(build_ext, object):
-    
+
     def __new__(cls, *a, **kw):
         # Note how this class is declared as a subclass of distutils
         # build_ext as the Cython version may not be available in the
@@ -91,6 +91,7 @@ class FlowerBuildExt(build_ext, object):
         for ext in self.extensions:
             ext.extra_compile_args = args
         super(FlowerBuildExt, self).build_extensions()
+
 
 cmdclass = {'build_ext': FlowerBuildExt}
 
