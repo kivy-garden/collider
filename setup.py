@@ -5,13 +5,7 @@ from os.path import dirname, join, exists
 from os import path, environ
 import sys
 from distutils.command.build_ext import build_ext
-try:
-    from setuptools import setup, Extension
-    print('Using setuptools')
-except ImportError:
-    from distutils.core import setup
-    from distutils.extension import Extension
-    print('Using distutils')
+from setuptools import setup, Extension, find_namespace_packages
 
 # get the version, we cannot import _version, because that would import
 # __init__.py, which would import the cython-compiled code. But that has
@@ -113,7 +107,8 @@ mods = ['collider/_collider']
 
 ext_modules = [Extension(
     'kivy_garden.' + src_file.replace('/', '.'),
-    sources=[join(src_path, 'kivy_garden', *(src_file + mod_suffix).split('/'))],
+    sources=[join(
+        src_path, 'kivy_garden', *(src_file + mod_suffix).split('/'))],
     libraries=libraries,
     include_dirs=include_dirs,
     library_dirs=library_dirs)
@@ -143,15 +138,17 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     keywords='Kivy kivy-garden',
 
-    packages=['kivy_garden.collider'],
+    packages=find_namespace_packages(include=['kivy_garden.*']),
     setup_requires=setup_requires,
     install_requires=[],
     extras_require={
-        'dev': ['pytest>=3.6', 'wheel', 'pytest-cov', 'pycodestyle'],
-        'travis': ['coveralls'],
+        'dev': ['pytest>=3.6', 'wheel', 'pytest-cov', 'pytest-asyncio',
+                'sphinx_rtd_theme'],
+        'ci': ['coveralls', 'pycodestyle'],
     },
     package_data={},
     data_files=[],

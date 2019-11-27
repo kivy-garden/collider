@@ -1,11 +1,9 @@
 
-#####################
+########################
   The Collider API
-#####################
+########################
 
-:mod:`collider`
-==============================
+.. toctree::
+   :maxdepth: 1
 
-.. automodule:: kivy_garden.collider
-   :members:
-   :show-inheritance:
+   flower.rst

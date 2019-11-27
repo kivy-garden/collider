@@ -1,5 +1,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/kivy-garden/collider/badge.svg?branch=master)](https://coveralls.io/github/kivy-garden/collider?branch=master)
-[![Build Status](https://travis-ci.com/kivy-garden/collider.svg?branch=master)](https://travis-ci.com/kivy-garden/collider)
+[![Github Build Status](https://github.com/kivy-garden/collider/workflows/Garden%20flower/badge.svg)](https://github.com/kivy-garden/collider/actions)
+
+See https://kivy-garden.github.io/collider/ for the rendered collider docs.
+
+Please see the garden [instructions](https://kivy-garden.github.io) for how to use kivy garden flowers.
 
 Collider
 ===============
@@ -33,6 +37,13 @@ To build or re-build locally::
 Or to install as editable (package is installed, but can be edited in its original location)::
 
     pip install -e .
+
+CI
+--
+
+Every push or pull request run the [GitHub Action](https://github.com/kivy-garden/flower/actions) CI.
+It tests the code on various OS and also generates wheels that can be released on PyPI upon a
+tag. Docs are also generated and uploaded to the repo as well as artifacts of the CI.
 
 TODO
 -------
