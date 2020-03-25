@@ -116,7 +116,7 @@ ext_modules = [Extension(
              for src_file in mods]
 
 for e in ext_modules:
-    e.cython_directives = {"embedsignature": True}
+    e.cython_directives = {"embedsignature": True, 'language_level': 3}
 
 setup_requires = []
 if declare_cython:
