@@ -31,8 +31,6 @@ cdef extern from "math.h":
 
 DEF PI = 3.14159265358979323846
 
-import itertools
-
 cdef inline double ellipe_tan_dot(
         double rx, double ry, double px, double py, double theta):
     return  ((rx ** 2 - ry ** 2) * cos(theta) * sin(theta) -
@@ -71,12 +69,17 @@ cdef class Collide2DPoly(object):
     cdef double *cconstant
     cdef double *cmultiple
     cdef char *cspace
-    cdef double min_x
-    cdef double max_x
-    cdef double min_y
-    cdef double max_y
+    # bounding box of the polygon (inclusive, width/height add 1)
+    # this is an integer
+    cdef int min_x
+    cdef int max_x
+    cdef int min_y
+    cdef int max_y
+    # size of the cached array
     cdef int width
+    cdef int height
     cdef int count
+    cdef int empty
 
     @cython.cdivision(True)
     def __cinit__(self, points, cache=False, **kwargs):
@@ -85,9 +88,11 @@ cdef class Collide2DPoly(object):
             raise IndexError('Odd number of points provided')
         if length < 6:
             self.cpoints = NULL
+            self.empty = 1
             return
 
         cdef int count = length / 2
+        self.empty = 0
         self.count = count
         self.cpoints = <double *>malloc(length * cython.sizeof(double))
         self.cconstant = <double *>malloc(count * cython.sizeof(double))
@@ -99,19 +104,18 @@ cdef class Collide2DPoly(object):
         if cpoints is NULL or cconstant is NULL or cmultiple is NULL:
             raise MemoryError()
 
-        self.min_x = min(points[0::2])
-        self.max_x = max(points[0::2])
-        self.min_y = min(points[1::2])
-        self.max_y = max(points[1::2])
-        cdef double min_x = floor(self.min_x), min_y = floor(self.min_y)
+        self.min_x = int(floor(min(points[0::2])))
+        self.max_x = int(ceil(max(points[0::2])))
+        self.min_y = int(floor(min(points[1::2])))
+        self.max_y = int(ceil(max(points[1::2])))
         cdef int i_x, i_y, j_x, j_y, i
-        cdef int j = count - 1, odd, width, height, x, y
+        cdef int j = count - 1, odd, x, y
         for i in range(length):
             cpoints[i] = points[i]
         if cache:
             for i in range(count):
-                cpoints[2 * i] -= min_x
-                cpoints[2 * i + 1] -= min_y
+                cpoints[2 * i] -= self.min_x
+                cpoints[2 * i + 1] -= self.min_y
 
         for i in range(count):
             i_x = i * 2
@@ -130,24 +134,25 @@ cdef class Collide2DPoly(object):
                                (cpoints[j_y] - cpoints[i_y]))
             j = i
         if cache:
-            width = int(ceil(self.max_x) - min_x + 1.)
-            self.width = width
-            height = int(ceil(self.max_y) - min_y + 1.)
-            self.cspace = <char *>malloc(height * width * cython.sizeof(char))
+            self.width = self.max_x - self.min_x + 1
+            self.height = self.max_y - self.min_y + 1
+
+            self.cspace = <char *>malloc(self.height * self.width * cython.sizeof(char))
             if self.cspace is NULL:
                 raise MemoryError()
-            for y in range(height):
-                for x in range(width):
+
+            for y in range(self.height):
+                for x in range(self.width):
                     j = count - 1
                     odd = 0
-                    for i from 0 <= i < count:
+                    for i in range(count):
                         i_y = i * 2 + 1
                         j_y = j * 2 + 1
-                        if (cpoints[i_y] < y and cpoints[j_y] >= y or
-                            cpoints[j_y] < y and cpoints[i_y] >= y):
+                        if (cpoints[i_y] < y <= cpoints[j_y] or
+                            cpoints[j_y] < y <= cpoints[i_y]):
                             odd ^= y * cmultiple[i] + cconstant[i] < x
                         j = i
-                    self.cspace[y * width + x] = odd
+                    self.cspace[y * self.width + x] = odd
 
     def __dealloc__(self):
         free(self.cpoints)
@@ -158,23 +163,30 @@ cdef class Collide2DPoly(object):
     @cython.cdivision(True)
     cpdef collide_point(self, double x, double y):
         cdef double *points = self.cpoints
-        if points is NULL or not (self.min_x <= x <= self.max_x and
-                                  self.min_y <= y <= self.max_y):
+        cdef int x_, y_
+        if self.empty or points is NULL or not (
+                self.min_x <= x <= self.max_x and self.min_y <= y <= self.max_y):
             return False
+
         if self.cspace is not NULL:
-            y -= floor(self.min_y)
-            x -= floor(self.min_x)
-            return self.cspace[int(y) * self.width + int(x)]
+            x_ = int(round(x - self.min_x))
+            y_ = int(round(y - self.min_y))
+            if not (0 <= x_ < self.width and 0 <= y_ < self.height):
+                return False
+            return self.cspace[y_ * self.width + x_]
 
         cdef int j = self.count - 1, odd = 0, i, i_y, j_y, i_x, j_x
         for i in range(self.count):
             i_y = i * 2 + 1
             j_y = j * 2 + 1
-            if (points[i_y] < y and points[j_y] >= y or
-                points[j_y] < y and points[i_y] >= y):
+            if points[i_y] < y <= points[j_y] or points[j_y] < y <= points[i_y]:
                 odd ^= y * self.cmultiple[i] + self.cconstant[i] < x
             j = i
         return odd
+
+    @cython.cdivision(True)
+    cpdef collide_points(self, points):
+        return [self.collide_point(*p) for p in points]
 
     def __contains__(self, point):
         return self.collide_point(*point)
@@ -184,6 +196,19 @@ cdef class Collide2DPoly(object):
         '''
         cdef int x, y
         cdef list points = []
+
+        if self.empty:
+            return points
+
+        if self.cspace is not NULL:
+            for x in range(self.width):
+                for y in range(self.height):
+                    if self.cspace[y * self.width + x]:
+                        points.append((
+                            int(x + self.min_x),
+                            int(y + self.min_y),
+                        ))
+            return points
 
         for x in range(int(floor(self.min_x)), int(ceil(self.max_x)) + 1):
             for y in range(int(floor(self.min_y)), int(ceil(self.max_y)) + 1):
@@ -196,24 +221,31 @@ cdef class Collide2DPoly(object):
         (x1, y1, x2, y2), where x1, y1 is the lower left and x2, y2 is the
         upper right point of the rectangle.
         '''
-        return (int(floor(self.min_x)), int(floor(self.min_y)),
-                int(ceil(self.max_x)), int(ceil(self.max_y)))
+        return self.min_x, self.min_y, self.max_x, self.max_y
 
     def get_area(self):
-        cdef int x, y
+        cdef int x, y, i
         cdef double count = 0
 
-        for x in range(int(floor(self.min_x)), int(ceil(self.max_x)) + 1):
-            for y in range(int(floor(self.min_y)), int(ceil(self.max_y)) + 1):
-                if self.collide_point(x, y):
-                    count += 1
-        return count
+        if self.empty:
+            return 0.
+
+        # https://www.mathopenref.com/coordpolygonarea.html
+        for i in range(self.count - 1):
+            count += self.cpoints[2 * i] * self.cpoints[2 * (i + 1) + 1]
+            count -= self.cpoints[2 * i + 1] * self.cpoints[2 * (i + 1)]
+
+        i = self.count - 1
+        count += self.cpoints[2 * i] * self.cpoints[1]
+        count -= self.cpoints[2 * i + 1] * self.cpoints[0]
+        count /= 2.
+        return abs(count)
 
     def get_centroid(self):
         cdef double x = 0
         cdef double y = 0
 
-        if self.cpoints is NULL:
+        if self.empty:
             return 0, 0
 
         for i in range(self.count):
@@ -281,6 +313,12 @@ cdef class CollideBezier(object):
         if self.line_collider is None:
             return False
         return self.line_collider.collide_point(x, y)
+
+    @cython.cdivision(True)
+    cpdef collide_points(self, points):
+        if self.line_collider is None:
+            return [False, ] * len(points)
+        return [self.line_collider.collide_point(*p) for p in points]
 
     def __contains__(self, point):
         if self.line_collider is None:
@@ -380,6 +418,10 @@ cdef class CollideEllipse(object):
         if self.angle:
             x, y = x * cos(self.angle) - y * sin(self.angle), x * sin(self.angle) + y * cos(self.angle)
         return (x ** 2 / self._rx_squared + y ** 2 / self._ry_squared <= 1.)
+
+    @cython.cdivision(True)
+    cpdef collide_points(self, points):
+        return [self.collide_point(*p) for p in points]
 
     def __contains__(self, point):
         return self.collide_point(*point)

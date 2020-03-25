@@ -1,6 +1,7 @@
-from ._version import __version__
+from kivy_garden.collider._version import __version__
 
-from ._collider import Collide2DPoly, CollideEllipse, CollideBezier
+from kivy_garden.collider._collider import \
+    Collide2DPoly, CollideEllipse, CollideBezier
 
 __all__ = ('Collide2DPoly', 'CollideBezier', 'CollideEllipse')
 
@@ -45,21 +46,24 @@ if __name__ == '__main__':
             touch.ungrab(self)
             if self.state == 'drawing':
                 self.state = 'testing'
-                self.collider = Collide2DPoly(
-                    touch.ud['line'].points, cache=True)
-                collider = self.collider
-                texture = Texture.create(size=self.size)
-                inside = [255, 255, 0]
-                outside = [255, 0, 255]
                 x_off, y_off = self.pos
+                self.collider = Collide2DPoly(
+                    [val - y_off if i % 2 else val - x_off
+                     for i, val in enumerate(touch.ud['line'].points)],
+                    cache=True)
+                collider = self.collider
+
+                texture = Texture.create(size=self.size)
+                inside_c = [255, 255, 0]
+                outside_c = [255, 0, 255]
                 width = int(self.width)
                 height = int(self.height)
+
                 buf = bytearray(width * height * 3)
-                for x in range(width):
-                    for y in range(height):
-                        pos = (x + y * width) * 3
-                        buf[pos:pos + 3] = (inside if (x + x_off, y + y_off)
-                                            in collider else outside)
+                points = list(itertools.product(range(width), range(height)))
+                for (x, y), inside in zip(points, collider.collide_points(points)):
+                    pos = (x + y * width) * 3
+                    buf[pos:pos + 3] = inside_c if inside else outside_c
                 texture.blit_buffer(bytes(buf), colorfmt='rgb',
                                     bufferfmt='ubyte')
                 self.canvas.remove_group('12345')
