@@ -61,7 +61,8 @@ if __name__ == '__main__':
 
                 buf = bytearray(width * height * 3)
                 points = list(itertools.product(range(width), range(height)))
-                for (x, y), inside in zip(points, collider.collide_points(points)):
+                for (x, y), inside in zip(
+                        points, collider.collide_points(points)):
                     pos = (x + y * width) * 3
                     buf[pos:pos + 3] = inside_c if inside else outside_c
                 texture.blit_buffer(bytes(buf), colorfmt='rgb',
