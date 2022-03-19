@@ -1,5 +1,5 @@
 name: Garden flower
-on: [push, pull_request]
+on: [push]
 
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
       CIBW_ARCHS: ${{ matrix.arch }}
       CIBW_BUILD_VERBOSITY: 3
       CIBW_TEST_SKIP: "*macosx*arm64*"
+      CIBW_SKIP: "*musllinux*"
 
     strategy:
       matrix:
