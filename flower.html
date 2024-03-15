@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collider &mdash; Collider  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="The Collider API" href="api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Collider
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">The Collider API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Collider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-kivy_garden.collider"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy_garden.collider</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kivy_garden.collider.Collide2DPoly"><code class="docutils literal notranslate"><span class="pre">Collide2DPoly</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kivy_garden.collider.CollideBezier"><code class="docutils literal notranslate"><span class="pre">CollideBezier</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kivy_garden.collider.CollideEllipse"><code class="docutils literal notranslate"><span class="pre">CollideEllipse</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Collider</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api.html">The Collider API</a></li>
+      <li class="breadcrumb-item active">Collider</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/flower.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="collider">
+<span id="cython-flower-api"></span><h1>Collider<a class="headerlink" href="#collider" title="Link to this heading"></a></h1>
+<section id="module-kivy_garden.collider">
+<span id="kivy-garden-collider"></span><h2><a class="reference internal" href="#module-kivy_garden.collider" title="kivy_garden.collider"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy_garden.collider</span></code></a><a class="headerlink" href="#module-kivy_garden.collider" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy_garden.collider.</span></span><span class="sig-name descname"><span class="pre">Collide2DPoly</span></span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Collide2DPoly checks whether a point is within a polygon defined by a
+list of corner points.</p>
+<p>Based on <a class="reference external" href="http://alienryderflex.com/polygon/">http://alienryderflex.com/polygon/</a></p>
+<p>For example, a simple triangle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">collider</span> <span class="o">=</span> <span class="n">Collide2DPoly</span><span class="p">([</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+<span class="gp">... </span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The constructor takes a list of x,y points in the form of [x1,y1,x2,y2…]
+as the points argument. These points define the corners of the
+polygon. The boundary is linearly interpolated between each set of points.
+The x, and y values must be floating points.
+The cache argument, if True, will calculate membership for all the points
+so when collide_point is called it’ll just be a table lookup.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly.bounding_box">
+<span class="sig-name descname"><span class="pre">bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly.bounding_box" title="Link to this definition"></a></dt>
+<dd><p>Returns the bounding box containing the polygon as 4 points
+(x1, y1, x2, y2), where x1, y1 is the lower left and x2, y2 is the
+upper right point of the rectangle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly.collide_point">
+<span class="sig-name descname"><span class="pre">collide_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly.collide_point" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly.collide_points">
+<span class="sig-name descname"><span class="pre">collide_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly.collide_points" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly.get_area">
+<span class="sig-name descname"><span class="pre">get_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly.get_area" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly.get_centroid">
+<span class="sig-name descname"><span class="pre">get_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly.get_centroid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.Collide2DPoly.get_inside_points">
+<span class="sig-name descname"><span class="pre">get_inside_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.Collide2DPoly.get_inside_points" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of all the points that are within the polygon.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy_garden.collider.</span></span><span class="sig-name descname"><span class="pre">CollideBezier</span></span><a class="headerlink" href="#kivy_garden.collider.CollideBezier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Takes a list of control points describing a Bezier curve and tests
+whether a point falls in the Bezier curve described by them.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.bounding_box">
+<span class="sig-name descname"><span class="pre">bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.bounding_box" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.collide_point">
+<span class="sig-name descname"><span class="pre">collide_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.collide_point" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.collide_points">
+<span class="sig-name descname"><span class="pre">collide_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.collide_points" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.convert_to_poly">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_to_poly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int</span> <span class="pre">segments=180</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.convert_to_poly" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.get_area">
+<span class="sig-name descname"><span class="pre">get_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.get_area" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.get_centroid">
+<span class="sig-name descname"><span class="pre">get_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.get_centroid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideBezier.get_inside_points">
+<span class="sig-name descname"><span class="pre">get_inside_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideBezier.get_inside_points" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy_garden.collider.</span></span><span class="sig-name descname"><span class="pre">CollideEllipse</span></span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>CollideEllipse checks whether a point is within an ellipse or circle
+aligned with the Cartesian plain, as defined by a center point and a major
+and minor radius. That is, the major and minor axes are along the x and y
+axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>x</cite>: float</dt><dd><p>the x position of the center of the ellipse</p>
+</dd>
+<dt><cite>y</cite>: float</dt><dd><p>the y position of the center of the ellipse</p>
+</dd>
+<dt><cite>rx</cite>: float</dt><dd><p>the radius of the ellipse along the x direction</p>
+</dd>
+<dt><cite>ry</cite>: float</dt><dd><p>the radius of the ellipse along the y direction</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">collider</span> <span class="o">=</span> <span class="n">CollideEllipse</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ry</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collider</span> <span class="o">=</span> <span class="n">CollideEllipse</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">ry</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">in</span> <span class="n">collider</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.bounding_box">
+<span class="sig-name descname"><span class="pre">bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.bounding_box" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.collide_point">
+<span class="sig-name descname"><span class="pre">collide_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.collide_point" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.collide_points">
+<span class="sig-name descname"><span class="pre">collide_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.collide_points" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.estimate_distance">
+<span class="sig-name descname"><span class="pre">estimate_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">error=1e-5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.estimate_distance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.get_area">
+<span class="sig-name descname"><span class="pre">get_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.get_area" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.get_centroid">
+<span class="sig-name descname"><span class="pre">get_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.get_centroid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy_garden.collider.CollideEllipse.get_inside_points">
+<span class="sig-name descname"><span class="pre">get_inside_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy_garden.collider.CollideEllipse.get_inside_points" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api.html" class="btn btn-neutral float-left" title="The Collider API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Kivy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
